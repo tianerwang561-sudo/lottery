@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今日人生建议</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: #F7F4EE;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 28px 44px;
+    max-width: 360px;
+    width: 100%;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+    text-align: center;
+  }
+
+  .top-tag {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: #aaa;
+    margin-bottom: 6px;
+  }
+
+  h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: #bbb;
+    margin-bottom: 36px;
+  }
+
+  .jar-wrap {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: transform 0.1s;
+  }
+  .jar-wrap:active { transform: scale(0.94); }
+  .jar-wrap.shake { animation: shake 0.5s ease; }
+
+  @keyframes shake {
+    0%,100%{transform:rotate(0) scale(1)}
+    15%{transform:rotate(-14deg) scale(1.05)}
+    30%{transform:rotate(11deg) scale(1.05)}
+    45%{transform:rotate(-9deg)}
+    60%{transform:rotate(7deg)}
+    75%{transform:rotate(-4deg)}
+    90%{transform:rotate(2deg)}
+  }
+
+  .jar-wrap svg { display: block; }
+
+  .tap-hint {
+    font-size: 12px;
+    color: #ccc;
+    margin-bottom: 36px;
+    letter-spacing: 0.05em;
+  }
+
+  .result-area {
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slip {
+    width: 100%;
+    background: #FAFAF7;
+    border: 0.5px solid #E8E4DC;
+    border-radius: 14px;
+    padding: 24px 20px 20px;
+    animation: rise 0.45s cubic-bezier(.22,1,.36,1);
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .slip-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: #ccc;
+    margin-bottom: 10px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: 0.06em;
+  }
+  .l1 { background: #EAF3DE; color: #3B6D11; }
+  .l2 { background: #E6F1FB; color: #185FA5; }
+  .l3 { background: #FAEEDA; color: #854F0B; }
+  .l4 { background: #FCEBEB; color: #A32D2D; }
+
+  .slip-main {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+
+  .slip-sub {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.8;
+  }
+
+  .share-btn {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 12px;
+    font-family: 'Noto Sans SC', sans-serif;
+    padding: 8px 22px;
+    border-radius: 20px;
+    border: 0.5px solid #ddd;
+    background: none;
+    color: #888;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .share-btn:hover { background: #f0f0ec; color: #444; }
+
+  .count {
+    font-size: 11px;
+    color: #ddd;
+    margin-top: 18px;
+  }
+
+  .empty-hint {
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <p class="top-tag">今日运势 · 随机人生建议</p>
+  <h1>今日人生建议</h1>
+  <p class="subtitle">摇一摇，接受命运的安排</p>
+
+  <div class="jar-wrap" id="jar" onclick="draw()" title="点击摇签">
+    <svg width="110" height="110" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="60" cy="38" rx="28" ry="10" fill="#C0DD97" stroke="#639922" stroke-width="1"/>
+      <path d="M32 38 Q28 92 36 107 Q48 120 72 120 Q96 120 84 107 Q92 92 88 38 Z" fill="#EAF3DE" stroke="#97C459" stroke-width="1"/>
+      <line x1="50" y1="50" x2="48" y2="110" stroke="#C0DD97" stroke-width="1.5" stroke-dasharray="3,5"/>
+      <line x1="60" y1="50" x2="60" y2="112" stroke="#C0DD97" stroke-width="1.5" stroke-dasharray="3,5"/>
+      <line x1="70" y1="50" x2="72" y2="110" stroke="#C0DD97" stroke-width="1.5" stroke-dasharray="3,5"/>
+      <text x="60" y="92" text-anchor="middle" font-size="30" font-family="Noto Serif SC, serif" fill="#639922">签</text>
+    </svg>
+  </div>
+
+  <p class="tap-hint">点击签筒摇签</p>
+
+  <div class="result-area" id="result-area">
+    <p class="empty-hint">你的今日建议<br>正在签筒里等你</p>
+  </div>
+
+  <div class="count" id="count-txt"></div>
+</div>
+
+<script>
+const advices = [
+  {level:"大吉",lc:"l1",main:"今天适合假装很忙",sub:"拒绝一切会议，说"我在推进一个重要项目"，这个项目叫"午睡"。"},
+  {level:"中吉",lc:"l2",main:"遇事不决，问 AI",sub:"但 AI 让你做什么，你再想想。反向建议有时候才是正解。"},
+  {level:"末吉",lc:"l3",main:"今日宜躺平",sub:"所有的努力都可以明天再说。今天的你，已经很不容易了。"},
+  {level:"大吉",lc:"l1",main:"立刻删掉三个 APP",sub:"你知道是哪三个，你只是不想承认。"},
+  {level:"凶",lc:"l4",main:"不要再刷手机了",sub:"包括现在。你刚刚花了30秒看这句话。"},
+  {level:"中吉",lc:"l2",main:"给一个许久没联系的朋友发消息",sub:"就说"最近在干嘛"，不需要理由，他/她也在想你。"},
+  {level:"大吉",lc:"l1",main:"今天适合做一件从没做过的事",sub:"可以很小，比如走回家换一条路，或者点一个没吃过的菜。"},
+  {level:"末吉",lc:"l3",main:"把那件拖了很久的事做掉",sub:"不是今天，但起码打开文件看一眼，算是个开始。"},
+  {level:"凶",lc:"l4",main:"今日不宜做重大决策",sub:"比如辞职、表白、买房。先睡一觉，明天的你更清醒。"},
+  {level:"中吉",lc:"l2",main:"找一件让你快乐的小事",sub:"不是"应该"快乐的事，是真的让你嘴角上扬的那种。"},
+  {level:"大吉",lc:"l1",main:"今天是整理的好日子",sub:"不用整理房间，整理一下手机相册就够了，那里有你忘记的快乐。"},
+  {level:"末吉",lc:"l3",main:"少说一句话",sub:"你今天准备说的那句话，可能不需要说出口。"},
+  {level:"中吉",lc:"l2",main:"喝够八杯水",sub:"别笑，你今天可能已经喝了不到两杯。你的细胞在求你。"},
+  {level:"大吉",lc:"l1",main:"夸一个今天遇到的人",sub:"真心话，一句就够，对方会记得很久。"},
+  {level:"凶",lc:"l4",main:"今日宜闭嘴",sub:"你心里那个"就说一句"，往往要说五句。今天忍一忍。"},
+  {level:"末吉",lc:"l3",main:"接受一件你改变不了的事",sub:"纠结它只是在消耗你，而它并不会因此改变。"},
+  {level:"大吉",lc:"l1",main:"今天可以对自己好一点",sub:"吃你想吃的，休息你需要的，不需要为此愧疚。"},
+  {level:"中吉",lc:"l2",main:"把一个想法写下来",sub:"哪怕一行字。脑子里的想法会溜走，写下来的想法会生长。"},
+];
+
+let count = 0;
+
+function draw() {
+  const jar = document.getElementById('jar');
+  jar.classList.remove('shake');
+  void jar.offsetWidth;
+  jar.classList.add('shake');
+  setTimeout(() => {
+    const a = advices[Math.floor(Math.random() * advices.length)];
+    count++;
+    document.getElementById('count-txt').textContent = `已摇 ${count} 次`;
+    document.getElementById('result-area').innerHTML = `
+      <div class="slip">
+        <div class="slip-label">今日签文</div>
+        <span class="badge ${a.lc}">${a.level}</span>
+        <div class="slip-main">${a.main}</div>
+        <div class="slip-sub">${a.sub}</div>
+        <button class="share-btn" onclick="copySlip('${a.main}','${a.sub}','${a.level}',this)">复制签文分享</button>
+      </div>`;
+  }, 420);
+}
+
+function copySlip(main, sub, level, btn) {
+  const txt = `【今日人生建议·${level}】\n${main}\n${sub}\n\n——今日人生建议签`;
+  navigator.clipboard.writeText(txt).then(() => {
+    btn.textContent = '✓ 已复制！';
+    setTimeout(() => btn.textContent = '复制签文分享', 2000);
+  });
+}
+</script>
+</body>
+</html>
